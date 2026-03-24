@@ -179,12 +179,14 @@ body {
   margin-left: var(--sidebar-w);
   flex: 1;
   padding: 40px 48px;
-  max-width: 860px;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* ===================== PAGE SECTIONS ===================== */
-.page-section { display: none; }
+.page-section { display: none; width: 100%; max-width: 860px; }
 .page-section.active { display: block; animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -622,6 +624,7 @@ pre.code-content code {
   .main {
     margin-left: 0;
     padding: 20px;
+    align-items: stretch;
   }
   .editor-overlay {
     left: 0;
