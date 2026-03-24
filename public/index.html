@@ -1,345 +1,388 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chkoupi-lang Docs — Learn the .dz Language</title>
-  <meta name="description" content="Interactive documentation and tutorials for Chkoupi-lang, an Algerian-flavored programming language with .dz source files." />
+  <meta name="description"
+    content="Interactive documentation and tutorials for Chkoupi-lang, an Algerian-flavored programming language with .dz source files." />
   <link rel="stylesheet" href="index.css" />
   <!-- CodeMirror 6 -->
   <script type="module" src="app.js"></script>
 </head>
+
 <body>
 
-<!-- ======================== TOP NAV ======================== -->
-<nav class="topbar">
-  <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">☰</button>
-  <a class="topbar-logo" href="#" onclick="navigate('home'); return false;">
-    <span class="logo-badge">.dz</span>
-    <span class="logo-name">Chk<span>oupi</span></span>
-  </a>
-  <div class="topbar-spacer"></div>
-  <a class="topbar-link" href="https://github.com" target="_blank">
-    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-    GitHub
-  </a>
-</nav>
+  <!-- ======================== TOP NAV ======================== -->
+  <nav class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">☰</button>
+    <a class="topbar-logo" href="#" onclick="navigate('home'); return false;">
+      <span class="logo-badge">.dz</span>
+      <span class="logo-name">Chk<span>oupi</span></span>
+    </a>
+    <div class="topbar-spacer"></div>
+    <a class="topbar-link" href="https://github.com/dzxpert/Chkoupi-lang" target="_blank">
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+        <path
+          d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+      </svg>
+      GitHub
+    </a>
+  </nav>
 
-<!-- ======================== LAYOUT ======================== -->
-<div class="layout">
+  <!-- ======================== LAYOUT ======================== -->
+  <div class="layout">
 
-  <!-- ======================== SIDEBAR ======================== -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-section-label">Getting Started</div>
-    <a class="nav-link active" data-page="home" onclick="navigate('home'); return false;" href="#">
-      <span class="nav-icon">🏠</span> Home
-    </a>
-    <a class="nav-link" data-page="intro" onclick="navigate('intro'); return false;" href="#">
-      <span class="nav-icon">⚡</span> Introduction
-    </a>
+    <!-- ======================== SIDEBAR ======================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section-label">Getting Started</div>
+      <a class="nav-link active" data-page="home" onclick="navigate('home'); return false;" href="#">
+        <span class="nav-icon">🏠</span> Home
+      </a>
+      <a class="nav-link" data-page="intro" onclick="navigate('intro'); return false;" href="#">
+        <span class="nav-icon">⚡</span> Introduction
+      </a>
 
-    <div class="sidebar-section-label">Language Reference</div>
-    <a class="nav-link" data-page="variables" onclick="navigate('variables'); return false;" href="#">
-      <span class="nav-icon">📦</span> Variables
-    </a>
-    <a class="nav-link" data-page="types" onclick="navigate('types'); return false;" href="#">
-      <span class="nav-icon">🔷</span> Types
-    </a>
-    <a class="nav-link" data-page="operators" onclick="navigate('operators'); return false;" href="#">
-      <span class="nav-icon">➕</span> Operators
-    </a>
-    <a class="nav-link" data-page="control-flow" onclick="navigate('control-flow'); return false;" href="#">
-      <span class="nav-icon">🔀</span> Control Flow
-    </a>
-    <a class="nav-link" data-page="functions" onclick="navigate('functions'); return false;" href="#">
-      <span class="nav-icon">🔧</span> Functions
-    </a>
-    <a class="nav-link" data-page="io" onclick="navigate('io'); return false;" href="#">
-      <span class="nav-icon">📟</span> I/O
-    </a>
-    <a class="nav-link" data-page="comments" onclick="navigate('comments'); return false;" href="#">
-      <span class="nav-icon">💬</span> Comments
-    </a>
-    <a class="nav-link" data-page="import" onclick="navigate('import'); return false;" href="#">
-      <span class="nav-icon">📥</span> Import
-    </a>
+      <div class="sidebar-section-label">Language Reference</div>
+      <a class="nav-link" data-page="variables" onclick="navigate('variables'); return false;" href="#">
+        <span class="nav-icon">📦</span> Variables
+      </a>
+      <a class="nav-link" data-page="types" onclick="navigate('types'); return false;" href="#">
+        <span class="nav-icon">🔷</span> Types
+      </a>
+      <a class="nav-link" data-page="operators" onclick="navigate('operators'); return false;" href="#">
+        <span class="nav-icon">➕</span> Operators
+      </a>
+      <a class="nav-link" data-page="control-flow" onclick="navigate('control-flow'); return false;" href="#">
+        <span class="nav-icon">🔀</span> Control Flow
+      </a>
+      <a class="nav-link" data-page="functions" onclick="navigate('functions'); return false;" href="#">
+        <span class="nav-icon">🔧</span> Functions
+      </a>
+      <a class="nav-link" data-page="io" onclick="navigate('io'); return false;" href="#">
+        <span class="nav-icon">📟</span> I/O
+      </a>
+      <a class="nav-link" data-page="comments" onclick="navigate('comments'); return false;" href="#">
+        <span class="nav-icon">💬</span> Comments
+      </a>
+      <a class="nav-link" data-page="import" onclick="navigate('import'); return false;" href="#">
+        <span class="nav-icon">📥</span> Import
+      </a>
 
-    <div class="sidebar-section-label">Examples & Tools</div>
-    <a class="nav-link" data-page="examples" onclick="navigate('examples'); return false;" href="#">
-      <span class="nav-icon">🧪</span> Examples
-    </a>
-    <a class="nav-link" data-page="compiler" onclick="navigate('compiler'); return false;" href="#">
-      <span class="nav-icon">⚙️</span> Compiler Usage
-    </a>
-  </aside>
+      <div class="sidebar-section-label">Examples & Tools</div>
+      <a class="nav-link" data-page="examples" onclick="navigate('examples'); return false;" href="#">
+        <span class="nav-icon">🧪</span> Examples
+      </a>
+      <a class="nav-link" data-page="compiler" onclick="navigate('compiler'); return false;" href="#">
+        <span class="nav-icon">⚙️</span> Compiler Usage
+      </a>
+    </aside>
 
-  <!-- ======================== MAIN CONTENT ======================== -->
-  <main class="main" id="main-content">
+    <!-- ======================== MAIN CONTENT ======================== -->
+    <main class="main" id="main-content">
 
-    <!-- HOME -->
-    <section class="page-section active" id="page-home">
-      <div class="hero">
-        <div class="hero-content">
-          <h1>Chkoupi-lang 🇩🇿</h1>
-          <p class="hero-subtitle">A modern, compiled programming language with Algerian-dialect keywords. Write expressive code in <code>.dz</code> files.</p>
-          <div class="hero-badges">
-            <span class="hero-badge">🚀 <strong>JIT</strong> compilation</span>
-            <span class="hero-badge">⚡ <strong>LLVM</strong> backend</span>
-            <span class="hero-badge">📁 <strong>.dz</strong> source files</span>
-            <span class="hero-badge">🔤 <strong>Darija</strong> keywords</span>
-          </div>
-          <button class="hero-start-btn" onclick="navigate('intro')">
-            🚀 Start Learning →
-          </button>
-        </div>
-      </div>
-
-      <h2 style="font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text-primary)">Browse Topics</h2>
-      <div class="quick-grid">
-        <div class="quick-card" onclick="navigate('variables')">
-          <div class="quick-card-icon">📦</div>
-          <div class="quick-card-title">Variables</div>
-          <div class="quick-card-desc"><code>dir</code> &amp; <code>dima</code></div>
-        </div>
-        <div class="quick-card" onclick="navigate('types')">
-          <div class="quick-card-icon">🔷</div>
-          <div class="quick-card-title">Types</div>
-          <div class="quick-card-desc">tabi3i, nass, 5iyar…</div>
-        </div>
-        <div class="quick-card" onclick="navigate('operators')">
-          <div class="quick-card-icon">➕</div>
-          <div class="quick-card-title">Operators</div>
-          <div class="quick-card-desc">Arithmetic &amp; logic</div>
-        </div>
-        <div class="quick-card" onclick="navigate('control-flow')">
-          <div class="quick-card-icon">🔀</div>
-          <div class="quick-card-title">Control Flow</div>
-          <div class="quick-card-desc">idha, ab9a_dor, dor…</div>
-        </div>
-        <div class="quick-card" onclick="navigate('functions')">
-          <div class="quick-card-icon">🔧</div>
-          <div class="quick-card-title">Functions</div>
-          <div class="quick-card-desc">dalla &amp; raja3</div>
-        </div>
-        <div class="quick-card" onclick="navigate('examples')">
-          <div class="quick-card-icon">🧪</div>
-          <div class="quick-card-title">Examples</div>
-          <div class="quick-card-desc">Factorial, FizzBuzz, Fibonacci</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- INTRO -->
-    <section class="page-section" id="page-intro">
-      <div class="page-header">
-        <h1><span class="icon">⚡</span> Introduction</h1>
-        <p>Chkoupi-lang is a compiled language inspired by Algerian Darija dialect. It compiles via LLVM and runs using a built-in JIT engine.</p>
-      </div>
-      <div class="card">
-        <h2>What is Chkoupi-lang?</h2>
-        <p>Chkoupi-lang is a statically-typed, compiled programming language that uses Algerian dialect (Darija) keywords. Source files use the <code>.dz</code> extension (a nod to Algeria's country code).</p>
-        <p>The compiler uses <strong>LLVM</strong> as its backend, supporting:</p>
-        <ul>
-          <li>Direct JIT execution — run code immediately</li>
-          <li>LLVM IR emission for inspection</li>
-          <li>Native object file compilation</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h2>Your First Program</h2>
-        <p>Create a file <code>salam.dz</code> and write:</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+      <!-- HOME -->
+      <section class="page-section active" id="page-home">
+        <div class="hero">
+          <div class="hero-content">
+            <h1>Chkoupi-lang 🇩🇿</h1>
+            <p class="hero-subtitle">A modern, compiled programming language with Algerian-dialect keywords. Write
+              expressive code in <code>.dz</code> files.</p>
+            <div class="hero-badges">
+              <span class="hero-badge">🚀 <strong>JIT</strong> compilation</span>
+              <span class="hero-badge">⚡ <strong>LLVM</strong> backend</span>
+              <span class="hero-badge">📁 <strong>.dz</strong> source files</span>
+              <span class="hero-badge">🔤 <strong>Darija</strong> keywords</span>
             </div>
+            <button class="hero-start-btn" onclick="navigate('intro')">
+              🚀 Start Learning →
+            </button>
           </div>
-          <pre class="code-content"><code><span class="kw-builtin">ektb</span>(<span class="kw-string">"salam bzzaf!\n"</span>);</code></pre>
         </div>
-        <p>Run it with:</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">powershell</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-            </div>
-          </div>
-          <pre class="code-content"><code>chkoupi.exe salam.dz</code></pre>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Format Rules</h2>
-        <ul>
-          <li>Statements end with <code>;</code></li>
-          <li>Blocks use <code>{ }</code></li>
-          <li>Type annotations: <code>dir x : tabi3i = 5;</code></li>
-          <li>Function return type: <code>dalla f() -&gt; tabi3i { ... }</code></li>
-          <li>Source files use the <code>.dz</code> extension</li>
-        </ul>
-      </div>
-    </section>
 
-    <!-- VARIABLES -->
-    <section class="page-section" id="page-variables">
-      <div class="page-header">
-        <h1><span class="icon">📦</span> Variables</h1>
-        <p>Declare mutable variables with <code>dir</code> and constants with <code>dima</code>.</p>
-      </div>
-      <div class="card">
-        <h2>Mutable Variables — <code>dir</code></h2>
-        <p>Use <code>dir</code> to declare a variable you can reassign later.</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
+        <h2 style="font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text-primary)">Browse Topics</h2>
+        <div class="quick-grid">
+          <div class="quick-card" onclick="navigate('variables')">
+            <div class="quick-card-icon">📦</div>
+            <div class="quick-card-title">Variables</div>
+            <div class="quick-card-desc"><code>dir</code> &amp; <code>dima</code></div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">dir</span> x : <span class="kw-type">tabi3i</span> = <span class="kw-number">42</span>;
+          <div class="quick-card" onclick="navigate('types')">
+            <div class="quick-card-icon">🔷</div>
+            <div class="quick-card-title">Types</div>
+            <div class="quick-card-desc">tabi3i, nass, 5iyar…</div>
+          </div>
+          <div class="quick-card" onclick="navigate('operators')">
+            <div class="quick-card-icon">➕</div>
+            <div class="quick-card-title">Operators</div>
+            <div class="quick-card-desc">Arithmetic &amp; logic</div>
+          </div>
+          <div class="quick-card" onclick="navigate('control-flow')">
+            <div class="quick-card-icon">🔀</div>
+            <div class="quick-card-title">Control Flow</div>
+            <div class="quick-card-desc">idha, ab9a_dor, dor…</div>
+          </div>
+          <div class="quick-card" onclick="navigate('functions')">
+            <div class="quick-card-icon">🔧</div>
+            <div class="quick-card-title">Functions</div>
+            <div class="quick-card-desc">dalla &amp; raja3</div>
+          </div>
+          <div class="quick-card" onclick="navigate('examples')">
+            <div class="quick-card-icon">🧪</div>
+            <div class="quick-card-title">Examples</div>
+            <div class="quick-card-desc">Factorial, FizzBuzz, Fibonacci</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTRO -->
+      <section class="page-section" id="page-intro">
+        <div class="page-header">
+          <h1><span class="icon">⚡</span> Introduction</h1>
+          <p>Chkoupi-lang is a compiled language inspired by Algerian Darija dialect. It compiles via LLVM and runs
+            using a built-in JIT engine.</p>
+        </div>
+        <div class="card">
+          <h2>What is Chkoupi-lang?</h2>
+          <p>Chkoupi-lang is a statically-typed, compiled programming language that uses Algerian dialect (Darija)
+            keywords. Source files use the <code>.dz</code> extension (a nod to Algeria's country code).</p>
+          <p>The compiler uses <strong>LLVM</strong> as its backend, supporting:</p>
+          <ul>
+            <li>Direct JIT execution — run code immediately</li>
+            <li>LLVM IR emission for inspection</li>
+            <li>Native object file compilation</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>Your First Program</h2>
+          <p>Create a file <code>salam.dz</code> and write:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre
+              class="code-content"><code><span class="kw-builtin">ektb</span>(<span class="kw-string">"salam bzzaf!\n"</span>);</code></pre>
+          </div>
+          <p>Run it with:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">powershell</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+              </div>
+            </div>
+            <pre class="code-content"><code>chkoupi.exe salam.dz</code></pre>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Format Rules</h2>
+          <ul>
+            <li>Statements end with <code>;</code></li>
+            <li>Blocks use <code>{ }</code></li>
+            <li>Type annotations: <code>dir x : tabi3i = 5;</code></li>
+            <li>Function return type: <code>dalla f() -&gt; tabi3i { ... }</code></li>
+            <li>Source files use the <code>.dz</code> extension</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- VARIABLES -->
+      <section class="page-section" id="page-variables">
+        <div class="page-header">
+          <h1><span class="icon">📦</span> Variables</h1>
+          <p>Declare mutable variables with <code>dir</code> and constants with <code>dima</code>.</p>
+        </div>
+        <div class="card">
+          <h2>Mutable Variables — <code>dir</code></h2>
+          <p>Use <code>dir</code> to declare a variable you can reassign later.</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dir</span> x : <span class="kw-type">tabi3i</span> = <span class="kw-number">42</span>;
 <span class="kw-keyword">dir</span> name : <span class="kw-type">nass</span> = <span class="kw-string">"brahim"</span>;
 <span class="kw-keyword">dir</span> flag : <span class="kw-type">5iyar</span> = <span class="kw-bool">sa7</span>;
 <span class="kw-builtin">ektb</span>(<span class="kw-string">"%lld\n"</span>, x);</code></pre>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Constants — <code>dima</code></h2>
-        <p><code>dima</code> means "always" in Darija. A constant cannot be reassigned after declaration.</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">dima</span> PI : <span class="kw-type">3ouchri</span> = <span class="kw-number">3.14159</span>;
+        </div>
+        <div class="card">
+          <h2>Constants — <code>dima</code></h2>
+          <p><code>dima</code> means "always" in Darija. A constant cannot be reassigned after declaration.</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dima</span> PI : <span class="kw-type">3ouchri</span> = <span class="kw-number">3.14159</span>;
 <span class="kw-builtin">ektb</span>(<span class="kw-string">"PI = %lf\n"</span>, PI);</code></pre>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Type Inference</h2>
-        <p>Type annotation is optional. The compiler infers the type from the value:</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">dir</span> x = <span class="kw-number">10</span>;    <span class="kw-comment">// inferred: tabi3i</span>
+        </div>
+        <div class="card">
+          <h2>Type Inference</h2>
+          <p>Type annotation is optional. The compiler infers the type from the value:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dir</span> x = <span class="kw-number">10</span>;    <span class="kw-comment">// inferred: tabi3i</span>
 <span class="kw-keyword">dir</span> y = <span class="kw-number">3.14</span>;  <span class="kw-comment">// inferred: 3ouchri</span>
 <span class="kw-builtin">ektb</span>(<span class="kw-string">"%lld %lf\n"</span>, x, y);</code></pre>
-        </div>
-        <div class="info-box">
-          <span class="info-icon">💡</span>
-          <p>When the type can be unambiguously determined from the assigned value, you can omit the <code>: type</code> annotation entirely.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- TYPES -->
-    <section class="page-section" id="page-types">
-      <div class="page-header">
-        <h1><span class="icon">🔷</span> Types</h1>
-        <p>Chkoupi-lang is statically typed. Every value has a type known at compile time.</p>
-      </div>
-      <div class="card">
-        <h2>Built-in Types</h2>
-        <table class="type-table">
-          <thead>
-            <tr>
-              <th>Keyword</th>
-              <th>Type</th>
-              <th>Size</th>
-              <th>Example</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td class="type-kw">tabi3i</td><td>Integer</td><td>64-bit</td><td><code>42</code></td></tr>
-            <tr><td class="type-kw">3ouchri</td><td>Float</td><td>64-bit double</td><td><code>3.14</code></td></tr>
-            <tr><td class="type-kw">5iyar</td><td>Boolean</td><td>—</td><td><code>sa7</code> / <code>ghalt</code></td></tr>
-            <tr><td class="type-kw">7arf</td><td>Character</td><td>8-bit</td><td><code>'a'</code></td></tr>
-            <tr><td class="type-kw">nass</td><td>String</td><td>pointer</td><td><code>"salam"</code></td></tr>
-            <tr><td class="type-kw">fargh</td><td>Void</td><td>—</td><td>— (no return)</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="card">
-        <h2>Type Examples</h2>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">dir</span> count   : <span class="kw-type">tabi3i</span>  = <span class="kw-number">100</span>;
+          <div class="info-box">
+            <span class="info-icon">💡</span>
+            <p>When the type can be unambiguously determined from the assigned value, you can omit the
+              <code>: type</code> annotation entirely.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TYPES -->
+      <section class="page-section" id="page-types">
+        <div class="page-header">
+          <h1><span class="icon">🔷</span> Types</h1>
+          <p>Chkoupi-lang is statically typed. Every value has a type known at compile time.</p>
+        </div>
+        <div class="card">
+          <h2>Built-in Types</h2>
+          <table class="type-table">
+            <thead>
+              <tr>
+                <th>Keyword</th>
+                <th>Type</th>
+                <th>Size</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="type-kw">tabi3i</td>
+                <td>Integer</td>
+                <td>64-bit</td>
+                <td><code>42</code></td>
+              </tr>
+              <tr>
+                <td class="type-kw">3ouchri</td>
+                <td>Float</td>
+                <td>64-bit double</td>
+                <td><code>3.14</code></td>
+              </tr>
+              <tr>
+                <td class="type-kw">5iyar</td>
+                <td>Boolean</td>
+                <td>—</td>
+                <td><code>sa7</code> / <code>ghalt</code></td>
+              </tr>
+              <tr>
+                <td class="type-kw">7arf</td>
+                <td>Character</td>
+                <td>8-bit</td>
+                <td><code>'a'</code></td>
+              </tr>
+              <tr>
+                <td class="type-kw">nass</td>
+                <td>String</td>
+                <td>pointer</td>
+                <td><code>"salam"</code></td>
+              </tr>
+              <tr>
+                <td class="type-kw">fargh</td>
+                <td>Void</td>
+                <td>—</td>
+                <td>— (no return)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h2>Type Examples</h2>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dir</span> count   : <span class="kw-type">tabi3i</span>  = <span class="kw-number">100</span>;
 <span class="kw-keyword">dir</span> ratio   : <span class="kw-type">3ouchri</span> = <span class="kw-number">1.618</span>;
 <span class="kw-keyword">dir</span> enabled : <span class="kw-type">5iyar</span>   = <span class="kw-bool">sa7</span>;
 <span class="kw-keyword">dir</span> letter  : <span class="kw-type">7arf</span>    = <span class="kw-string">'Z'</span>;
 <span class="kw-keyword">dir</span> msg     : <span class="kw-type">nass</span>    = <span class="kw-string">"labas!"</span>;
 
 <span class="kw-builtin">ektb</span>(<span class="kw-string">"%lld %lf %s\n"</span>, count, ratio, msg);</code></pre>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Boolean Values</h2>
-        <p>Booleans use the Darija words for true and false:</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">dir</span> win  : <span class="kw-type">5iyar</span> = <span class="kw-bool">sa7</span>;    <span class="kw-comment">// true  (sa7 = correct)</span>
+        </div>
+        <div class="card">
+          <h2>Boolean Values</h2>
+          <p>Booleans use the Darija words for true and false:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre
+              class="code-content"><code><span class="kw-keyword">dir</span> win  : <span class="kw-type">5iyar</span> = <span class="kw-bool">sa7</span>;    <span class="kw-comment">// true  (sa7 = correct)</span>
 <span class="kw-keyword">dir</span> loss : <span class="kw-type">5iyar</span> = <span class="kw-bool">ghalt</span>;  <span class="kw-comment">// false (ghalt = wrong)</span></code></pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- OPERATORS -->
-    <section class="page-section" id="page-operators">
-      <div class="page-header">
-        <h1><span class="icon">➕</span> Operators</h1>
-        <p>Chkoupi-lang supports standard arithmetic and comparison operators, plus Darija logical operators.</p>
-      </div>
-      <div class="card">
-        <h2>Arithmetic Operators</h2>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">dir</span> a = <span class="kw-number">10</span>;
+        </div>
+      </section>
+
+      <!-- OPERATORS -->
+      <section class="page-section" id="page-operators">
+        <div class="page-header">
+          <h1><span class="icon">➕</span> Operators</h1>
+          <p>Chkoupi-lang supports standard arithmetic and comparison operators, plus Darija logical operators.</p>
+        </div>
+        <div class="card">
+          <h2>Arithmetic Operators</h2>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre
+              class="code-content"><code><span class="kw-keyword">dir</span> a = <span class="kw-number">10</span>;
 <span class="kw-keyword">dir</span> b = <span class="kw-number">3</span>;
 <span class="kw-builtin">ektb</span>(<span class="kw-string">"%lld\n"</span>, a <span class="kw-op">+</span> b);  <span class="kw-comment">// 13</span>
 <span class="kw-builtin">ektb</span>(<span class="kw-string">"%lld\n"</span>, a <span class="kw-op">-</span> b);  <span class="kw-comment">// 7</span>
 <span class="kw-builtin">ektb</span>(<span class="kw-string">"%lld\n"</span>, a <span class="kw-op">*</span> b);  <span class="kw-comment">// 30</span>
 <span class="kw-builtin">ektb</span>(<span class="kw-string">"%lld\n"</span>, a <span class="kw-op">/</span> b);  <span class="kw-comment">// 3</span>
 <span class="kw-builtin">ektb</span>(<span class="kw-string">"%lld\n"</span>, a <span class="kw-op">%</span> b);  <span class="kw-comment">// 1</span></code></pre>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Comparison Operators</h2>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">dir</span> x = <span class="kw-number">5</span>;
+        </div>
+        <div class="card">
+          <h2>Comparison Operators</h2>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dir</span> x = <span class="kw-number">5</span>;
 <span class="kw-keyword">dir</span> y = <span class="kw-number">10</span>;
 x <span class="kw-op">==</span> y   <span class="kw-comment">// false — equal</span>
 x <span class="kw-op">!=</span> y   <span class="kw-comment">// true  — not equal</span>
@@ -347,187 +390,207 @@ x <span class="kw-op">&lt;</span>  y   <span class="kw-comment">// true  — les
 x <span class="kw-op">&gt;</span>  y   <span class="kw-comment">// false — greater than</span>
 x <span class="kw-op">&lt;=</span> y   <span class="kw-comment">// true  — less or equal</span>
 x <span class="kw-op">&gt;=</span> y   <span class="kw-comment">// false — greater or equal</span></code></pre>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Logical Operators (Darija)</h2>
-        <table class="type-table">
-          <thead><tr><th>Operator</th><th>Meaning</th><th>English Equiv.</th></tr></thead>
-          <tbody>
-            <tr><td class="type-kw">w</td><td>and (و)</td><td><code>&amp;&amp;</code></td></tr>
-            <tr><td class="type-kw">wla</td><td>or (ولا)</td><td><code>||</code></td></tr>
-            <tr><td class="type-kw">machi</td><td>not (ماشي)</td><td><code>!</code></td></tr>
-          </tbody>
-        </table>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">dir</span> a : <span class="kw-type">5iyar</span> = <span class="kw-bool">sa7</span>;
+        </div>
+        <div class="card">
+          <h2>Logical Operators (Darija)</h2>
+          <table class="type-table">
+            <thead>
+              <tr>
+                <th>Operator</th>
+                <th>Meaning</th>
+                <th>English Equiv.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="type-kw">w</td>
+                <td>and (و)</td>
+                <td><code>&amp;&amp;</code></td>
+              </tr>
+              <tr>
+                <td class="type-kw">wla</td>
+                <td>or (ولا)</td>
+                <td><code>||</code></td>
+              </tr>
+              <tr>
+                <td class="type-kw">machi</td>
+                <td>not (ماشي)</td>
+                <td><code>!</code></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre
+              class="code-content"><code><span class="kw-keyword">dir</span> a : <span class="kw-type">5iyar</span> = <span class="kw-bool">sa7</span>;
 <span class="kw-keyword">dir</span> b : <span class="kw-type">5iyar</span> = <span class="kw-bool">ghalt</span>;
 <span class="kw-keyword">dir</span> c = a <span class="kw-keyword">w</span> b;       <span class="kw-comment">// sa7 AND ghalt = ghalt</span>
 <span class="kw-keyword">dir</span> d = a <span class="kw-keyword">wla</span> b;     <span class="kw-comment">// sa7 OR  ghalt = sa7</span>
 <span class="kw-keyword">dir</span> e = <span class="kw-keyword">machi</span> a;    <span class="kw-comment">// NOT sa7 = ghalt</span></code></pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTROL FLOW -->
-    <section class="page-section" id="page-control-flow">
-      <div class="page-header">
-        <h1><span class="icon">🔀</span> Control Flow</h1>
-        <p>Chkoupi-lang has all the control flow structures you need, named in Darija.</p>
-      </div>
-      <div class="card">
-        <h2>If / Else — <code>idha</code> / <code>idha_mknch</code></h2>
-        <p><code>idha</code> = "if", <code>idha_mknch</code> = "if not / else"</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">dir</span> x : <span class="kw-type">tabi3i</span> = <span class="kw-number">7</span>;
+        </div>
+      </section>
+
+      <!-- CONTROL FLOW -->
+      <section class="page-section" id="page-control-flow">
+        <div class="page-header">
+          <h1><span class="icon">🔀</span> Control Flow</h1>
+          <p>Chkoupi-lang has all the control flow structures you need, named in Darija.</p>
+        </div>
+        <div class="card">
+          <h2>If / Else — <code>idha</code> / <code>idha_mknch</code></h2>
+          <p><code>idha</code> = "if", <code>idha_mknch</code> = "if not / else"</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dir</span> x : <span class="kw-type">tabi3i</span> = <span class="kw-number">7</span>;
 <span class="kw-keyword">idha</span> (x <span class="kw-op">&gt;</span> <span class="kw-number">0</span>) {
     <span class="kw-builtin">ektb</span>(<span class="kw-string">"positive!\n"</span>);
 } <span class="kw-keyword">idha_mknch</span> {
     <span class="kw-builtin">ektb</span>(<span class="kw-string">"machi positive\n"</span>);
 }</code></pre>
-        </div>
-      </div>
-      <div class="card">
-        <h2>While Loop — <code>ab9a_dor</code></h2>
-        <p><code>ab9a_dor</code> = "keep turning / keep looping"</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">dir</span> i : <span class="kw-type">tabi3i</span> = <span class="kw-number">0</span>;
+        </div>
+        <div class="card">
+          <h2>While Loop — <code>ab9a_dor</code></h2>
+          <p><code>ab9a_dor</code> = "keep turning / keep looping"</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dir</span> i : <span class="kw-type">tabi3i</span> = <span class="kw-number">0</span>;
 <span class="kw-keyword">ab9a_dor</span> (i <span class="kw-op">&lt;</span> <span class="kw-number">5</span>) {
     <span class="kw-builtin">ektb</span>(<span class="kw-string">"%lld\n"</span>, i);
     i = i <span class="kw-op">+</span> <span class="kw-number">1</span>;
 }</code></pre>
-        </div>
-      </div>
-      <div class="card">
-        <h2>For Loop — <code>dor</code></h2>
-        <p><code>dor</code> = "turn / iterate"</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">dor</span> (<span class="kw-keyword">dir</span> i = <span class="kw-number">0</span>; i <span class="kw-op">&lt;</span> <span class="kw-number">5</span>; i = i <span class="kw-op">+</span> <span class="kw-number">1</span>) {
+        </div>
+        <div class="card">
+          <h2>For Loop — <code>dor</code></h2>
+          <p><code>dor</code> = "turn / iterate"</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dor</span> (<span class="kw-keyword">dir</span> i = <span class="kw-number">0</span>; i <span class="kw-op">&lt;</span> <span class="kw-number">5</span>; i = i <span class="kw-op">+</span> <span class="kw-number">1</span>) {
     <span class="kw-builtin">ektb</span>(<span class="kw-string">"i = %lld\n"</span>, i);
 }</code></pre>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Switch / Case — <code>bdl</code> / <code>khyr</code></h2>
-        <p><code>bdl</code> = "change", <code>khyr</code> = "option/choice"</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">dir</span> code : <span class="kw-type">tabi3i</span> = <span class="kw-number">2</span>;
+        </div>
+        <div class="card">
+          <h2>Switch / Case — <code>bdl</code> / <code>khyr</code></h2>
+          <p><code>bdl</code> = "change", <code>khyr</code> = "option/choice"</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dir</span> code : <span class="kw-type">tabi3i</span> = <span class="kw-number">2</span>;
 <span class="kw-keyword">bdl</span> (code) {
     <span class="kw-keyword">khyr</span> <span class="kw-number">1</span>: <span class="kw-builtin">ektb</span>(<span class="kw-string">"wahd\n"</span>);
     <span class="kw-keyword">khyr</span> <span class="kw-number">2</span>: <span class="kw-builtin">ektb</span>(<span class="kw-string">"zouj\n"</span>);
     <span class="kw-keyword">khyr</span> <span class="kw-number">3</span>: <span class="kw-builtin">ektb</span>(<span class="kw-string">"tlata\n"</span>);
 }</code></pre>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Try / Except — <code>jarb</code> / <code>ila_ghalt</code></h2>
-        <p><code>jarb</code> = "try/test", <code>ila_ghalt</code> = "if wrong/error"</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">jarb</span> {
+        </div>
+        <div class="card">
+          <h2>Try / Except — <code>jarb</code> / <code>ila_ghalt</code></h2>
+          <p><code>jarb</code> = "try/test", <code>ila_ghalt</code> = "if wrong/error"</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">jarb</span> {
     <span class="kw-comment">// risky code here</span>
     <span class="kw-builtin">ektb</span>(<span class="kw-string">"kolchi mzyen!\n"</span>);
 } <span class="kw-keyword">ila_ghalt</span> {
     <span class="kw-builtin">ektb</span>(<span class="kw-string">"wqe3 ghalta!\n"</span>);
 }</code></pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- FUNCTIONS -->
-    <section class="page-section" id="page-functions">
-      <div class="page-header">
-        <h1><span class="icon">🔧</span> Functions</h1>
-        <p>Define reusable functions with <code>dalla</code> and return values with <code>raja3</code>.</p>
-      </div>
-      <div class="card">
-        <h2>Declaring a Function</h2>
-        <p><code>dalla</code> = "enter/go into", <code>raja3</code> = "return"</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">dalla</span> greet(name: <span class="kw-type">nass</span>) <span class="kw-op">-&gt;</span> <span class="kw-type">fargh</span> {
+        </div>
+      </section>
+
+      <!-- FUNCTIONS -->
+      <section class="page-section" id="page-functions">
+        <div class="page-header">
+          <h1><span class="icon">🔧</span> Functions</h1>
+          <p>Define reusable functions with <code>dalla</code> and return values with <code>raja3</code>.</p>
+        </div>
+        <div class="card">
+          <h2>Declaring a Function</h2>
+          <p><code>dalla</code> = "enter/go into", <code>raja3</code> = "return"</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dalla</span> greet(name: <span class="kw-type">nass</span>) <span class="kw-op">-&gt;</span> <span class="kw-type">fargh</span> {
     <span class="kw-builtin">ektb</span>(<span class="kw-string">"salam %s!\n"</span>, name);
 }
 
 greet(<span class="kw-string">"brahim"</span>);</code></pre>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Functions with Return Values</h2>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">dalla</span> add(a: <span class="kw-type">tabi3i</span>, b: <span class="kw-type">tabi3i</span>) <span class="kw-op">-&gt;</span> <span class="kw-type">tabi3i</span> {
+        </div>
+        <div class="card">
+          <h2>Functions with Return Values</h2>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dalla</span> add(a: <span class="kw-type">tabi3i</span>, b: <span class="kw-type">tabi3i</span>) <span class="kw-op">-&gt;</span> <span class="kw-type">tabi3i</span> {
     <span class="kw-keyword">raja3</span> a <span class="kw-op">+</span> b;
 }
 
 <span class="kw-keyword">dir</span> result = add(<span class="kw-number">3</span>, <span class="kw-number">7</span>);
 <span class="kw-builtin">ektb</span>(<span class="kw-string">"3 + 7 = %lld\n"</span>, result);</code></pre>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Recursive Functions</h2>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">dalla</span> factorial(n: <span class="kw-type">tabi3i</span>) <span class="kw-op">-&gt;</span> <span class="kw-type">tabi3i</span> {
+        </div>
+        <div class="card">
+          <h2>Recursive Functions</h2>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre
+              class="code-content"><code><span class="kw-keyword">dalla</span> factorial(n: <span class="kw-type">tabi3i</span>) <span class="kw-op">-&gt;</span> <span class="kw-type">tabi3i</span> {
     <span class="kw-keyword">idha</span> (n <span class="kw-op">&lt;=</span> <span class="kw-number">1</span>) {
         <span class="kw-keyword">raja3</span> <span class="kw-number">1</span>;
     }
@@ -535,93 +598,112 @@ greet(<span class="kw-string">"brahim"</span>);</code></pre>
 }
 
 <span class="kw-builtin">ektb</span>(<span class="kw-string">"%lld\n"</span>, factorial(<span class="kw-number">5</span>));</code></pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- I/O -->
-    <section class="page-section" id="page-io">
-      <div class="page-header">
-        <h1><span class="icon">📟</span> Input / Output</h1>
-        <p>Use <code>ektb</code> to print and <code>a9ra</code> to read user input.</p>
-      </div>
-      <div class="card">
-        <h2>Printing — <code>ektb</code></h2>
-        <p><code>ektb</code> means "write" in Darija. It works like C's <code>printf</code> with format specifiers.</p>
-        <table class="type-table">
-          <thead><tr><th>Specifier</th><th>Type</th></tr></thead>
-          <tbody>
-            <tr><td><code>%lld</code></td><td>Integer (tabi3i)</td></tr>
-            <tr><td><code>%lf</code></td><td>Float (3ouchri)</td></tr>
-            <tr><td><code>%s</code></td><td>String (nass)</td></tr>
-            <tr><td><code>%c</code></td><td>Character (7arf)</td></tr>
-          </tbody>
-        </table>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-builtin">ektb</span>(<span class="kw-string">"salam!\n"</span>);
+        </div>
+      </section>
+
+      <!-- I/O -->
+      <section class="page-section" id="page-io">
+        <div class="page-header">
+          <h1><span class="icon">📟</span> Input / Output</h1>
+          <p>Use <code>ektb</code> to print and <code>a9ra</code> to read user input.</p>
+        </div>
+        <div class="card">
+          <h2>Printing — <code>ektb</code></h2>
+          <p><code>ektb</code> means "write" in Darija. It works like C's <code>printf</code> with format specifiers.
+          </p>
+          <table class="type-table">
+            <thead>
+              <tr>
+                <th>Specifier</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>%lld</code></td>
+                <td>Integer (tabi3i)</td>
+              </tr>
+              <tr>
+                <td><code>%lf</code></td>
+                <td>Float (3ouchri)</td>
+              </tr>
+              <tr>
+                <td><code>%s</code></td>
+                <td>String (nass)</td>
+              </tr>
+              <tr>
+                <td><code>%c</code></td>
+                <td>Character (7arf)</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-builtin">ektb</span>(<span class="kw-string">"salam!\n"</span>);
 <span class="kw-keyword">dir</span> x : <span class="kw-type">tabi3i</span> = <span class="kw-number">99</span>;
 <span class="kw-builtin">ektb</span>(<span class="kw-string">"x = %lld\n"</span>, x);
 <span class="kw-keyword">dir</span> pi : <span class="kw-type">3ouchri</span> = <span class="kw-number">3.14</span>;
 <span class="kw-builtin">ektb</span>(<span class="kw-string">"pi = %lf\n"</span>, pi);</code></pre>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Reading Input — <code>a9ra</code></h2>
-        <p><code>a9ra</code> means "read". It reads user input into a variable.</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">dir</span> n : <span class="kw-type">tabi3i</span> = <span class="kw-number">0</span>;
+        </div>
+        <div class="card">
+          <h2>Reading Input — <code>a9ra</code></h2>
+          <p><code>a9ra</code> means "read". It reads user input into a variable.</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dir</span> n : <span class="kw-type">tabi3i</span> = <span class="kw-number">0</span>;
 <span class="kw-builtin">ektb</span>(<span class="kw-string">"3tini raqm: "</span>);
 <span class="kw-builtin">a9ra</span>(n);
 <span class="kw-builtin">ektb</span>(<span class="kw-string">"dkhalt: %lld\n"</span>, n);</code></pre>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- COMMENTS -->
-    <section class="page-section" id="page-comments">
-      <div class="page-header">
-        <h1><span class="icon">💬</span> Comments</h1>
-        <p>Use comments to document your code — they are ignored by the compiler.</p>
-      </div>
-      <div class="card">
-        <h2>Single-Line Comments</h2>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
-          </div>
-          <pre class="code-content"><code><span class="kw-comment">// hada comment b sahh</span>
-<span class="kw-keyword">dir</span> x = <span class="kw-number">42</span>;  <span class="kw-comment">// inline comment</span></code></pre>
+      <!-- COMMENTS -->
+      <section class="page-section" id="page-comments">
+        <div class="page-header">
+          <h1><span class="icon">💬</span> Comments</h1>
+          <p>Use comments to document your code — they are ignored by the compiler.</p>
         </div>
-      </div>
-      <div class="card">
-        <h2>Multi-Line Comments</h2>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+        <div class="card">
+          <h2>Single-Line Comments</h2>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
             </div>
+            <pre
+              class="code-content"><code><span class="kw-comment">// hada comment b sahh</span>
+<span class="kw-keyword">dir</span> x = <span class="kw-number">42</span>;  <span class="kw-comment">// inline comment</span></code></pre>
           </div>
-          <pre class="code-content"><code><span class="kw-comment">/*
+        </div>
+        <div class="card">
+          <h2>Multi-Line Comments</h2>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-comment">/*
   hadi function
   kathseb factorial
   dial ay raqm
@@ -629,55 +711,60 @@ greet(<span class="kw-string">"brahim"</span>);</code></pre>
 <span class="kw-keyword">dalla</span> factorial(n: <span class="kw-type">tabi3i</span>) <span class="kw-op">-&gt;</span> <span class="kw-type">tabi3i</span> {
     <span class="kw-keyword">raja3</span> n;
 }</code></pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- IMPORT -->
-    <section class="page-section" id="page-import">
-      <div class="page-header">
-        <h1><span class="icon">📥</span> Import</h1>
-        <p>Link external Chkoupi modules into your program using <code>jibli</code>.</p>
-      </div>
-      <div class="card">
-        <h2><code>jibli</code> — "bring me"</h2>
-        <p>The <code>jibli</code> keyword means "bring me" in Darija. It is used to import external <code>.dz</code> modules.</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-keyword">jibli</span> <span class="kw-string">"utils"</span>;    <span class="kw-comment">// links utils.dz module</span>
+        </div>
+      </section>
+
+      <!-- IMPORT -->
+      <section class="page-section" id="page-import">
+        <div class="page-header">
+          <h1><span class="icon">📥</span> Import</h1>
+          <p>Link external Chkoupi modules into your program using <code>jibli</code>.</p>
+        </div>
+        <div class="card">
+          <h2><code>jibli</code> — "bring me"</h2>
+          <p>The <code>jibli</code> keyword means "bring me" in Darija. It is used to import external <code>.dz</code>
+            modules.</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre
+              class="code-content"><code><span class="kw-keyword">jibli</span> <span class="kw-string">"utils"</span>;    <span class="kw-comment">// links utils.dz module</span>
 <span class="kw-keyword">jibli</span> <span class="kw-string">"math"</span>;     <span class="kw-comment">// links math.dz module</span></code></pre>
-        </div>
-        <div class="info-box warn">
-          <span class="info-icon">🚧</span>
-          <p><strong>Future feature:</strong> Module imports are planned and the syntax is finalized, but full linker integration is still under development.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- EXAMPLES -->
-    <section class="page-section" id="page-examples">
-      <div class="page-header">
-        <h1><span class="icon">🧪</span> Examples</h1>
-        <p>Complete Chkoupi-lang programs demonstrating language features. Click <strong>▶ Try it</strong> to run any example in the editor.</p>
-      </div>
-      <div class="card">
-        <h2>Factorial Calculator</h2>
-        <p>This program reads a number from the user and prints its factorial. It uses functions, recursion, I/O, and control flow.</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-comment">// Factorial — chkoupi example</span>
+          <div class="info-box warn">
+            <span class="info-icon">🚧</span>
+            <p><strong>Future feature:</strong> Module imports are planned and the syntax is finalized, but full linker
+              integration is still under development.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- EXAMPLES -->
+      <section class="page-section" id="page-examples">
+        <div class="page-header">
+          <h1><span class="icon">🧪</span> Examples</h1>
+          <p>Complete Chkoupi-lang programs demonstrating language features. Click <strong>▶ Try it</strong> to run any
+            example in the editor.</p>
+        </div>
+        <div class="card">
+          <h2>Factorial Calculator</h2>
+          <p>This program reads a number from the user and prints its factorial. It uses functions, recursion, I/O, and
+            control flow.</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-comment">// Factorial — chkoupi example</span>
 
 <span class="kw-keyword">dalla</span> factorial(n: <span class="kw-type">tabi3i</span>) <span class="kw-op">-&gt;</span> <span class="kw-type">tabi3i</span> {
     <span class="kw-keyword">idha</span> (n <span class="kw-op">&lt;=</span> <span class="kw-number">1</span>) {
@@ -690,36 +777,37 @@ greet(<span class="kw-string">"brahim"</span>);</code></pre>
 <span class="kw-builtin">ektb</span>(<span class="kw-string">"3tini raqm: "</span>);
 <span class="kw-builtin">a9ra</span>(n);
 <span class="kw-builtin">ektb</span>(<span class="kw-string">"%lld! = %lld\n"</span>, n, factorial(n));</code></pre>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Counter Loop</h2>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-comment">// Count from 1 to 10</span>
+        </div>
+        <div class="card">
+          <h2>Counter Loop</h2>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-comment">// Count from 1 to 10</span>
 <span class="kw-keyword">dor</span> (<span class="kw-keyword">dir</span> i = <span class="kw-number">1</span>; i <span class="kw-op">&lt;=</span> <span class="kw-number">10</span>; i = i <span class="kw-op">+</span> <span class="kw-number">1</span>) {
     <span class="kw-builtin">ektb</span>(<span class="kw-string">"%lld\n"</span>, i);
 }</code></pre>
-        </div>
-      </div>
-      <div class="card">
-        <h2>FizzBuzz</h2>
-        <p>Classic interview problem — print numbers 1–20, replacing multiples of 3 with <em>Fizz</em>, multiples of 5 with <em>Buzz</em>, and both with <em>FizzBuzz</em>.</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-comment">// FizzBuzz — 1 to 20</span>
+        </div>
+        <div class="card">
+          <h2>FizzBuzz</h2>
+          <p>Classic interview problem — print numbers 1–20, replacing multiples of 3 with <em>Fizz</em>, multiples of 5
+            with <em>Buzz</em>, and both with <em>FizzBuzz</em>.</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-comment">// FizzBuzz — 1 to 20</span>
 <span class="kw-keyword">dor</span> (<span class="kw-keyword">dir</span> i = <span class="kw-number">1</span>; i <span class="kw-op">&lt;=</span> <span class="kw-number">20</span>; i = i <span class="kw-op">+</span> <span class="kw-number">1</span>) {
     <span class="kw-keyword">idha</span> (i <span class="kw-op">%</span> <span class="kw-number">15</span> <span class="kw-op">==</span> <span class="kw-number">0</span>) {
         <span class="kw-builtin">ektb</span>(<span class="kw-string">"FizzBuzz\n"</span>);
@@ -735,20 +823,20 @@ greet(<span class="kw-string">"brahim"</span>);</code></pre>
         }
     }
 }</code></pre>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Fibonacci Sequence</h2>
-        <p>Print the first 15 numbers of the Fibonacci sequence using an iterative loop.</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">chkoupi (.dz)</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-              <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
-            </div>
           </div>
-          <pre class="code-content"><code><span class="kw-comment">// Fibonacci — first 15 numbers</span>
+        </div>
+        <div class="card">
+          <h2>Fibonacci Sequence</h2>
+          <p>Print the first 15 numbers of the Fibonacci sequence using an iterative loop.</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-comment">// Fibonacci — first 15 numbers</span>
 <span class="kw-keyword">dir</span> a : <span class="kw-type">tabi3i</span> = <span class="kw-number">0</span>;
 <span class="kw-keyword">dir</span> b : <span class="kw-type">tabi3i</span> = <span class="kw-number">1</span>;
 <span class="kw-keyword">dir</span> tmp : <span class="kw-type">tabi3i</span> = <span class="kw-number">0</span>;
@@ -761,53 +849,53 @@ greet(<span class="kw-string">"brahim"</span>);</code></pre>
     b = tmp;
     count = count <span class="kw-op">+</span> <span class="kw-number">1</span>;
 }</code></pre>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- COMPILER -->
-    <section class="page-section" id="page-compiler">
-      <div class="page-header">
-        <h1><span class="icon">⚙️</span> Compiler Usage</h1>
-        <p>The Chkoupi compiler supports JIT execution, IR emission, and native object compilation.</p>
-      </div>
-      <div class="card">
-        <h2>JIT Execution (Default)</h2>
-        <p>Run a <code>.dz</code> file directly — the compiler JITs and executes it immediately.</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">powershell</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
-            </div>
-          </div>
-          <pre class="code-content"><code>chkoupi.exe myfile.dz</code></pre>
+      <!-- COMPILER -->
+      <section class="page-section" id="page-compiler">
+        <div class="page-header">
+          <h1><span class="icon">⚙️</span> Compiler Usage</h1>
+          <p>The Chkoupi compiler supports JIT execution, IR emission, and native object compilation.</p>
         </div>
-      </div>
-      <div class="card">
-        <h2>Emit LLVM IR</h2>
-        <p>Print the generated LLVM Intermediate Representation for inspection.</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">powershell</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+        <div class="card">
+          <h2>JIT Execution (Default)</h2>
+          <p>Run a <code>.dz</code> file directly — the compiler JITs and executes it immediately.</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">powershell</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+              </div>
             </div>
+            <pre class="code-content"><code>chkoupi.exe myfile.dz</code></pre>
           </div>
-          <pre class="code-content"><code>chkoupi.exe myfile.dz --emit-ir</code></pre>
         </div>
-      </div>
-      <div class="card">
-        <h2>Compile to Native Binary</h2>
-        <p>Emit an object file, then link it with <code>clang</code> to produce a native executable.</p>
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-lang-badge">powershell</span>
-            <div class="code-actions">
-              <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+        <div class="card">
+          <h2>Emit LLVM IR</h2>
+          <p>Print the generated LLVM Intermediate Representation for inspection.</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">powershell</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+              </div>
             </div>
+            <pre class="code-content"><code>chkoupi.exe myfile.dz --emit-ir</code></pre>
           </div>
-          <pre class="code-content"><code># Step 1: compile to object file
+        </div>
+        <div class="card">
+          <h2>Compile to Native Binary</h2>
+          <p>Emit an object file, then link it with <code>clang</code> to produce a native executable.</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">powershell</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+              </div>
+            </div>
+            <pre class="code-content"><code># Step 1: compile to object file
 chkoupi.exe myfile.dz --emit-obj out.o
 
 # Step 2: link with clang
@@ -815,34 +903,36 @@ clang out.o -o myprogram
 
 # Step 3: run
 ./myprogram</code></pre>
+          </div>
         </div>
-      </div>
-      <div class="info-box">
-        <span class="info-icon">💡</span>
-        <p>The <strong>JIT mode</strong> (default) is best for development and learning. Use <code>--emit-obj</code> for production deployments.</p>
-      </div>
-    </section>
+        <div class="info-box">
+          <span class="info-icon">💡</span>
+          <p>The <strong>JIT mode</strong> (default) is best for development and learning. Use <code>--emit-obj</code>
+            for production deployments.</p>
+        </div>
+      </section>
 
-  </main>
-</div>
-
-<!-- ======================== EDITOR PANEL ======================== -->
-<div class="editor-overlay" id="editor-overlay">
-  <div class="editor-bar">
-    <span class="editor-bar-title">▶ Try It Yourself — Chkoupi Editor</span>
-    <span class="editor-kbd-hint"><kbd>Ctrl+Enter</kbd> Run &nbsp;·&nbsp; <kbd>Esc</kbd> Close</span>
-    <button class="btn-run" id="btn-run" onclick="runCode()">▶ Run</button>
-    <button class="btn-reset" onclick="resetCode()">↺ Reset</button>
-    <button class="btn-close-editor" onclick="closeEditor()">✕ Close</button>
+    </main>
   </div>
-  <div class="editor-body">
-    <div class="editor-pane" id="editor-pane"></div>
-    <div class="output-pane">
-      <div class="output-pane-header">Output</div>
-      <div class="output-content" id="output-content">// Press ▶ Run to execute...</div>
+
+  <!-- ======================== EDITOR PANEL ======================== -->
+  <div class="editor-overlay" id="editor-overlay">
+    <div class="editor-bar">
+      <span class="editor-bar-title">▶ Try It Yourself — Chkoupi Editor</span>
+      <span class="editor-kbd-hint"><kbd>Ctrl+Enter</kbd> Run &nbsp;·&nbsp; <kbd>Esc</kbd> Close</span>
+      <button class="btn-run" id="btn-run" onclick="runCode()">▶ Run</button>
+      <button class="btn-reset" onclick="resetCode()">↺ Reset</button>
+      <button class="btn-close-editor" onclick="closeEditor()">✕ Close</button>
+    </div>
+    <div class="editor-body">
+      <div class="editor-pane" id="editor-pane"></div>
+      <div class="output-pane">
+        <div class="output-pane-header">Output</div>
+        <div class="output-content" id="output-content">// Press ▶ Run to execute...</div>
+      </div>
     </div>
   </div>
-</div>
 
 </body>
+
 </html>
