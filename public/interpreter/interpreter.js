@@ -270,7 +270,7 @@ export class Interpreter {
           if (!arg || arg.type !== 'Ident')
             throw new RuntimeError('a9ra needs a variable name');
           const current = env.get(arg.name);
-          const raw = this.inputFn(`Enter value for "${arg.name}": `);
+          const raw = this.inputFn(`3tini 9imt "${arg.name}": `);
           let parsed;
           if (typeof current === 'number' && Number.isInteger(current)) {
             parsed = parseInt(raw, 10);

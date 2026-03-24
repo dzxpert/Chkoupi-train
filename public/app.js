@@ -528,7 +528,7 @@ class ChkoupiInterpreter {
           const arg = expr.args[0];
           if (!arg || arg.type !== 'Ident') throw new Error('a9ra() needs a variable name');
           const cur = env.get(arg.name);
-          const raw = this.inp(`Enter value for "${arg.name}":`);
+          const raw = this.inp(`3tini 9imt "${arg.name}":`);
           let pv;
           if (typeof cur === 'number' && Number.isInteger(cur)) { pv = parseInt(raw, 10); if (isNaN(pv)) pv = 0; }
           else if (typeof cur === 'number') { pv = parseFloat(raw); if (isNaN(pv)) pv = 0.0; }
@@ -685,10 +685,22 @@ window.runCode = function() {
   }
 
   let outBuffer = '';
-  const outputCb = (str) => { outBuffer += str; };
+  let _pendingPrompt = '';  // tracks text from ektb() before a9ra()
+  const outputCb = (str) => {
+    outBuffer += str;
+    // If the last ektb output doesn't end with \n, treat it as a prompt for the next a9ra
+    if (!str.endsWith('\n')) {
+      _pendingPrompt = str;
+    } else {
+      _pendingPrompt = '';
+    }
+  };
   const inputCb  = (msg) => {
-    const val = window.prompt(msg);
-    if (val !== null) outBuffer += `📥 ${msg} ${val}\n`;
+    // Use the pending prompt from ektb() if available, otherwise fall back to msg
+    const promptText = _pendingPrompt || msg;
+    const val = window.prompt(promptText);
+    if (val !== null) outBuffer += `${val}\n`;
+    _pendingPrompt = '';
     return val ?? '';
   };
 
