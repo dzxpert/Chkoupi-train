@@ -450,6 +450,28 @@ nums[<span class="kw-number">1</span>] = <span class="kw-number">42</span>;
           </div>
         </div>
         <div class="card">
+          <h2>Compound Assignment &amp; Increment/Decrement</h2>
+          <p>You can use standard C-style shorthand operators for incrementing, decrementing, and compound mathematical assignments:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dir</span> count = <span class="kw-number">10</span>;
+count<span class="kw-op">++</span>;          <span class="kw-comment">// post-increment: count = 11</span>
+count<span class="kw-op">--</span>;          <span class="kw-comment">// post-decrement: count = 10</span>
+
+count <span class="kw-op">+=</span> <span class="kw-number">5</span>;       <span class="kw-comment">// add and assign: count = 15</span>
+count <span class="kw-op">-=</span> <span class="kw-number">2</span>;       <span class="kw-comment">// subtract and assign: count = 13</span>
+count <span class="kw-op">*=</span> <span class="kw-number">2</span>;       <span class="kw-comment">// multiply and assign: count = 26</span>
+count <span class="kw-op">/=</span> <span class="kw-number">3</span>;       <span class="kw-comment">// divide and assign: count = 8</span>
+<span class="kw-builtin">ektb</span>(<span class="kw-string">"count = %lld\n"</span>, count);</code></pre>
+          </div>
+        </div>
+        <div class="card">
           <h2>Comparison Operators</h2>
           <div class="code-block">
             <div class="code-block-header">
@@ -541,6 +563,27 @@ x <span class="kw-op">&gt;=</span> y   <span class="kw-comment">// false — gre
           </div>
         </div>
         <div class="card">
+          <h2>Else-If Chaining — <code>idha_mknch idha</code></h2>
+          <p>Chain conditions sequentially without nesting blocks using <code>idha_mknch idha</code>:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dir</span> x = <span class="kw-number">0</span>;
+<span class="kw-keyword">idha</span> (x <span class="kw-op">&gt;</span> <span class="kw-number">0</span>) {
+    <span class="kw-builtin">ektb</span>(<span class="kw-string">"kbir 3la sifr\n"</span>);
+} <span class="kw-keyword">idha_mknch</span> <span class="kw-keyword">idha</span> (x <span class="kw-op">&lt;</span> <span class="kw-number">0</span>) {
+    <span class="kw-builtin">ektb</span>(<span class="kw-string">"sghir 3la sifr\n"</span>);
+} <span class="kw-keyword">idha_mknch</span> {
+    <span class="kw-builtin">ektb</span>(<span class="kw-string">"sifr b dhabt!\n"</span>);
+}</code></pre>
+          </div>
+        </div>
+        <div class="card">
           <h2>While Loop — <code>ab9a_dor</code></h2>
           <p><code>ab9a_dor</code> = "keep turning / keep looping"</p>
           <div class="code-block">
@@ -570,6 +613,28 @@ x <span class="kw-op">&gt;=</span> y   <span class="kw-comment">// false — gre
               </div>
             </div>
             <pre class="code-content"><code><span class="kw-keyword">dor</span> (<span class="kw-keyword">dir</span> i = <span class="kw-number">0</span>; i <span class="kw-op">&lt;</span> <span class="kw-number">5</span>; i = i <span class="kw-op">+</span> <span class="kw-number">1</span>) {
+    <span class="kw-builtin">ektb</span>(<span class="kw-string">"i = %lld\n"</span>, i);
+}</code></pre>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Loop Exit &amp; Jump — <code>a7bss</code> / <code>kml</code></h2>
+          <p>Use loop controls: <code>a7bss</code> breaks the loop immediately, and <code>kml</code> jumps to the next iteration.</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dor</span> (<span class="kw-keyword">dir</span> i = <span class="kw-number">1</span>; i <span class="kw-op">&lt;=</span> <span class="kw-number">10</span>; i<span class="kw-op">++</span>) {
+    <span class="kw-keyword">idha</span> (i <span class="kw-op">==</span> <span class="kw-number">3</span>) {
+        <span class="kw-keyword">kml</span>;      <span class="kw-comment">// skip 3</span>
+    }
+    <span class="kw-keyword">idha</span> (i <span class="kw-op">==</span> <span class="kw-number">6</span>) {
+        <span class="kw-keyword">a7bss</span>;    <span class="kw-comment">// break loop at 6</span>
+    }
     <span class="kw-builtin">ektb</span>(<span class="kw-string">"i = %lld\n"</span>, i);
 }</code></pre>
           </div>

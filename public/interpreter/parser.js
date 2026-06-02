@@ -86,6 +86,8 @@ export class Parser {
         case 'idha':       return this.parseIf();
         case 'ab9a_dor':   return this.parseWhile();
         case 'dor':        return this.parseFor();
+        case 'a7bss':      return this.parseBreak();
+        case 'kml':        return this.parseContinue();
         case 'bdl':        return this.parseSwitch();
         case 'jarb':       return this.parseTry();
         case 'raja3':      return this.parseReturn();
@@ -138,9 +140,25 @@ export class Parser {
     let else_ = null;
     if (this.check('KEYWORD') && this.peek().value === 'idha_mknch') {
       this.advance();
-      else_ = this.parseBlock();
+      if (this.check('KEYWORD') && this.peek().value === 'idha') {
+        else_ = this.parseIf();
+      } else {
+        else_ = this.parseBlock();
+      }
     }
     return { type: 'If', cond, then, else_ };
+  }
+
+  parseBreak() {
+    this.expect('KEYWORD', 'a7bss');
+    this.match('SEMI');
+    return { type: 'Break' };
+  }
+
+  parseContinue() {
+    this.expect('KEYWORD', 'kml');
+    this.match('SEMI');
+    return { type: 'Continue' };
   }
 
   parseWhile() {
@@ -243,6 +261,17 @@ export class Parser {
         return { type: 'IndexAssign', expr: left.expr, index: left.index, value: right };
       }
       return { type: 'Assign', name: left.name, value: right };
+    }
+    if (this.check('COMPOUND_ASSIGN')) {
+      const opTok = this.advance();
+      const op = opTok.value.slice(0, -1);
+      const right = this.parseAssignment();
+      if (left.type !== 'Ident' && left.type !== 'Index') throw new Error('Invalid assignment target');
+      const desugaredVal = { type: 'BinOp', op, left, right };
+      if (left.type === 'Index') {
+        return { type: 'IndexAssign', expr: left.expr, index: left.index, value: desugaredVal };
+      }
+      return { type: 'Assign', name: left.name, value: desugaredVal };
     }
     return left;
   }
@@ -367,6 +396,20 @@ export class Parser {
         const index = this.parseExpr();
         this.expect('RBRACK');
         expr = { type: 'Index', expr, index };
+      } else if (this.match('OP', '++')) {
+        if (expr.type !== 'Ident' && expr.type !== 'Index') throw new Error('Invalid increment target');
+        if (expr.type === 'Index') {
+          expr = { type: 'IndexAssign', expr: expr.expr, index: expr.index, value: { type: 'BinOp', op: '+', left: expr, right: { type: 'Literal', value: 1 } } };
+        } else {
+          expr = { type: 'Assign', name: expr.name, value: { type: 'BinOp', op: '+', left: expr, right: { type: 'Literal', value: 1 } } };
+        }
+      } else if (this.match('OP', '--')) {
+        if (expr.type !== 'Ident' && expr.type !== 'Index') throw new Error('Invalid increment target');
+        if (expr.type === 'Index') {
+          expr = { type: 'IndexAssign', expr: expr.expr, index: expr.index, value: { type: 'BinOp', op: '-', left: expr, right: { type: 'Literal', value: 1 } } };
+        } else {
+          expr = { type: 'Assign', name: expr.name, value: { type: 'BinOp', op: '-', left: expr, right: { type: 'Literal', value: 1 } } };
+        }
       } else {
         break;
       }

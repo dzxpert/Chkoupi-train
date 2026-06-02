@@ -8,6 +8,7 @@ const KEYWORDS = new Set([
   'dir', 'dima',
   'idha', 'idha_mknch',
   'ab9a_dor', 'dor',
+  'a7bss', 'kml',
   'bdl', 'khyr',
   'jarb', 'ila_ghalt',
   'dalla', 'raja3',
@@ -51,6 +52,13 @@ export function tokenize(source) {
     if (match('!=')) { tokens.push({ type: 'OP', value: '!=' }); continue; }
     if (match('<=')) { tokens.push({ type: 'OP', value: '<=' }); continue; }
     if (match('>=')) { tokens.push({ type: 'OP', value: '>=' }); continue; }
+    if (match('+=')) { tokens.push({ type: 'COMPOUND_ASSIGN', value: '+=' }); continue; }
+    if (match('-=')) { tokens.push({ type: 'COMPOUND_ASSIGN', value: '-=' }); continue; }
+    if (match('*=')) { tokens.push({ type: 'COMPOUND_ASSIGN', value: '*=' }); continue; }
+    if (match('/=')) { tokens.push({ type: 'COMPOUND_ASSIGN', value: '/=' }); continue; }
+    if (match('%=')) { tokens.push({ type: 'COMPOUND_ASSIGN', value: '%=' }); continue; }
+    if (match('++')) { tokens.push({ type: 'OP', value: '++' }); continue; }
+    if (match('--')) { tokens.push({ type: 'OP', value: '--' }); continue; }
 
     // Single-char punctuation / operators
     const ch = source[pos];

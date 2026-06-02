@@ -136,3 +136,5 @@ dist
 .pnp.*
 .wrangler/state/v3/cache/miniflare-CacheObject/9f458c07675338a7426a7b81ac4fb1baf92d034efbcaaf4336379640ed744ded.sqlite
 DOCS.md
+/.wrangler
+/.wrangler/tmp

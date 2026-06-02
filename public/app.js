@@ -7,7 +7,7 @@ import { EditorView, basicSetup, EditorState, StreamLanguage, oneDark } from './
 // CHKOUPI LEXER
 // =============================================================================
 const CHKOUPI_KEYWORDS = new Set([
-  'dir','dima','idha','idha_mknch','ab9a_dor','dor',
+  'dir','dima','idha','idha_mknch','ab9a_dor','dor','a7bss','kml',
   'bdl','khyr','jarb','ila_ghalt','dalla','raja3','jibli',
   'w','wla','machi','sa7','ghalt',
   'tabi3i','3ouchri','5iyar','7arf','nass','fargh','jadwl'
@@ -33,6 +33,13 @@ function tokenize(source) {
     if (match('!=')) { tokens.push({ type: 'OP', value: '!=' }); continue; }
     if (match('<=')) { tokens.push({ type: 'OP', value: '<=' }); continue; }
     if (match('>=')) { tokens.push({ type: 'OP', value: '>=' }); continue; }
+    if (match('+=')) { tokens.push({ type: 'COMPOUND_ASSIGN', value: '+=' }); continue; }
+    if (match('-=')) { tokens.push({ type: 'COMPOUND_ASSIGN', value: '-=' }); continue; }
+    if (match('*=')) { tokens.push({ type: 'COMPOUND_ASSIGN', value: '*=' }); continue; }
+    if (match('/=')) { tokens.push({ type: 'COMPOUND_ASSIGN', value: '/=' }); continue; }
+    if (match('%=')) { tokens.push({ type: 'COMPOUND_ASSIGN', value: '%=' }); continue; }
+    if (match('++')) { tokens.push({ type: 'OP', value: '++' }); continue; }
+    if (match('--')) { tokens.push({ type: 'OP', value: '--' }); continue; }
 
     const ch = source[pos];
     if ('+-*/%<>'.includes(ch)) { pos++; tokens.push({ type: 'OP',    value: ch }); continue; }
@@ -160,6 +167,8 @@ class ChkoupiParser {
         case 'idha':     return this.parseIf();
         case 'ab9a_dor': return this.parseWhile();
         case 'dor':      return this.parseFor();
+        case 'a7bss':    return this.parseBreak();
+        case 'kml':      return this.parseContinue();
         case 'bdl':      return this.parseSwitch();
         case 'jarb':     return this.parseTry();
         case 'raja3':    return this.parseReturn();
@@ -209,9 +218,26 @@ class ChkoupiParser {
     const then = this.parseBlock();
     let else_ = null;
     if (this.check('KEYWORD') && this.peek().value === 'idha_mknch') {
-      this.advance(); else_ = this.parseBlock();
+      this.advance();
+      if (this.check('KEYWORD') && this.peek().value === 'idha') {
+        else_ = this.parseIf();
+      } else {
+        else_ = this.parseBlock();
+      }
     }
     return { type: 'If', cond, then, else_ };
+  }
+
+  parseBreak() {
+    this.expect('KEYWORD', 'a7bss');
+    this.match('SEMI');
+    return { type: 'Break' };
+  }
+
+  parseContinue() {
+    this.expect('KEYWORD', 'kml');
+    this.match('SEMI');
+    return { type: 'Continue' };
   }
 
   parseWhile() {
@@ -306,6 +332,17 @@ class ChkoupiParser {
       }
       return { type: 'Assign', name: left.name, value: right };
     }
+    if (this.check('COMPOUND_ASSIGN')) {
+      const opTok = this.advance();
+      const op = opTok.value.slice(0, -1); // e.g. '+=' => '+'
+      const right = this.parseAssignment();
+      if (left.type !== 'Ident' && left.type !== 'Index') throw new SyntaxError('Invalid assignment target');
+      const desugaredVal = { type: 'BinOp', op, left, right };
+      if (left.type === 'Index') {
+        return { type: 'IndexAssign', expr: left.expr, index: left.index, value: desugaredVal };
+      }
+      return { type: 'Assign', name: left.name, value: desugaredVal };
+    }
     return left;
   }
 
@@ -398,6 +435,20 @@ class ChkoupiParser {
         const index = this.parseExpr();
         this.expect('RBRACK');
         expr = { type: 'Index', expr, index };
+      } else if (this.match('OP', '++')) {
+        if (expr.type !== 'Ident' && expr.type !== 'Index') throw new Error('Invalid increment target');
+        if (expr.type === 'Index') {
+          expr = { type: 'IndexAssign', expr: expr.expr, index: expr.index, value: { type: 'BinOp', op: '+', left: expr, right: { type: 'Literal', value: 1 } } };
+        } else {
+          expr = { type: 'Assign', name: expr.name, value: { type: 'BinOp', op: '+', left: expr, right: { type: 'Literal', value: 1 } } };
+        }
+      } else if (this.match('OP', '--')) {
+        if (expr.type !== 'Ident' && expr.type !== 'Index') throw new Error('Invalid decrement target');
+        if (expr.type === 'Index') {
+          expr = { type: 'IndexAssign', expr: expr.expr, index: expr.index, value: { type: 'BinOp', op: '-', left: expr, right: { type: 'Literal', value: 1 } } };
+        } else {
+          expr = { type: 'Assign', name: expr.name, value: { type: 'BinOp', op: '-', left: expr, right: { type: 'Literal', value: 1 } } };
+        }
       } else {
         break;
       }
@@ -410,6 +461,8 @@ class ChkoupiParser {
 // CHKOUPI INTERPRETER
 // =============================================================================
 const MAX_STEPS = 200_000;
+class BreakSignal {}
+class ContinueSignal {}
 class ReturnSignal { constructor(v) { this.value = v; } }
 
 class Env {
@@ -482,7 +535,7 @@ class ChkoupiInterpreter {
   _list(stmts, env) {
     for (const s of stmts) {
       const r = this._exec(s, env);
-      if (r instanceof ReturnSignal) return r;
+      if (r instanceof ReturnSignal || r instanceof BreakSignal || r instanceof ContinueSignal) return r;
     }
   }
 
@@ -501,6 +554,8 @@ class ChkoupiInterpreter {
           this._tick();
           const r = this._list(stmt.body.stmts, new Env(env));
           if (r instanceof ReturnSignal) return r;
+          if (r instanceof BreakSignal) break;
+          if (r instanceof ContinueSignal) continue;
         }
         return;
       }
@@ -512,6 +567,11 @@ class ChkoupiInterpreter {
           this._tick();
           const r = this._list(stmt.body.stmts, new Env(fe));
           if (r instanceof ReturnSignal) return r;
+          if (r instanceof BreakSignal) break;
+          if (r instanceof ContinueSignal) {
+            this._eval(stmt.update, fe);
+            continue;
+          }
           this._eval(stmt.update, fe);
         }
         return;
@@ -540,6 +600,8 @@ class ChkoupiInterpreter {
       }
       case 'Block':  return this._list(stmt.stmts, new Env(env));
       case 'Return': { const v = stmt.value ? this._eval(stmt.value, env) : null; return new ReturnSignal(v); }
+      case 'Break':  return new BreakSignal();
+      case 'Continue': return new ContinueSignal();
       case 'Import': return;
       default: throw new Error(`Unknown stmt: ${stmt.type}`);
     }
@@ -632,7 +694,7 @@ const chkoupiLanguage = StreamLanguage.define({
     if (stream.match(/\/\*[\s\S]*?\*\//)) return 'comment';
     if (stream.match(/"[^"]*"/)) return 'string';
     if (stream.match(/'[^']*'/)) return 'string';
-    if (stream.match(/\b(dir|dima|idha|idha_mknch|ab9a_dor|dor|bdl|khyr|jarb|ila_ghalt|dalla|raja3|jibli|w|wla|machi)\b/)) return 'keyword';
+    if (stream.match(/\b(dir|dima|idha|idha_mknch|ab9a_dor|dor|a7bss|kml|bdl|khyr|jarb|ila_ghalt|dalla|raja3|jibli|w|wla|machi)\b/)) return 'keyword';
     if (stream.match(/\b(tabi3i|3ouchri|5iyar|7arf|nass|fargh|jadwl)\b/)) return 'typeName';
     if (stream.match(/\b(sa7|ghalt)\b/)) return 'bool';
     if (stream.match(/\b(ektb|a9ra|tool)\b/)) return 'builtin';

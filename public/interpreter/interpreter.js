@@ -12,6 +12,8 @@
 const MAX_STEPS = 200_000;
 
 // ── Control-flow signals ────────────────────────────────────────────────────
+class BreakSignal {}
+class ContinueSignal {}
 class ReturnSignal { constructor(value) { this.value = value; } }
 
 // ── Environment (scope chain) ───────────────────────────────────────────────
@@ -118,7 +120,7 @@ export class Interpreter {
   _execList(stmts, env) {
     for (const stmt of stmts) {
       const sig = this._exec(stmt, env);
-      if (sig instanceof ReturnSignal) return sig;
+      if (sig instanceof ReturnSignal || sig instanceof BreakSignal || sig instanceof ContinueSignal) return sig;
     }
   }
 
@@ -151,6 +153,8 @@ export class Interpreter {
           this._tick();
           const sig = this._execList(stmt.body.stmts, new Environment(env));
           if (sig instanceof ReturnSignal) return sig;
+          if (sig instanceof BreakSignal) break;
+          if (sig instanceof ContinueSignal) continue;
         }
         return;
       }
@@ -168,6 +172,11 @@ export class Interpreter {
           this._tick();
           const sig = this._execList(stmt.body.stmts, new Environment(forEnv));
           if (sig instanceof ReturnSignal) return sig;
+          if (sig instanceof BreakSignal) break;
+          if (sig instanceof ContinueSignal) {
+            this._eval(stmt.update, forEnv);
+            continue;
+          }
           this._eval(stmt.update, forEnv);
         }
         return;
@@ -217,6 +226,12 @@ export class Interpreter {
         const val = stmt.value ? this._eval(stmt.value, env) : null;
         return new ReturnSignal(val);
       }
+
+      case 'Break':
+        return new BreakSignal();
+
+      case 'Continue':
+        return new ContinueSignal();
 
       case 'Import':
         return; // no-op
