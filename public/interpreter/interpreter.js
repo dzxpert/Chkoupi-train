@@ -83,6 +83,27 @@ export class Interpreter {
     // a9ra — read into variable (handled specially in evalExpr > Call)
     // We register a sentinel so scope lookup doesn't throw.
     this.globals.define('a9ra', '__builtin_a9ra__');
+
+    // tool — get length of string or array
+    this.globals.define('tool', (args) => {
+      if (!args.length) return 0;
+      const v = args[0];
+      if (typeof v === 'string') return v.length;
+      if (Array.isArray(v)) return v.length;
+      return 0;
+    });
+
+    // jdr — square root
+    this.globals.define('jdr', (args) => {
+      if (!args.length) return 0.0;
+      return Math.sqrt(Number(args[0]));
+    });
+
+    // qwa — power
+    this.globals.define('qwa', (args) => {
+      if (args.length < 2) return 0.0;
+      return Math.pow(Number(args[0]), Number(args[1]));
+    });
   }
 
   // ── Entry point ────────────────────────────────────────────────────────────
@@ -218,6 +239,26 @@ export class Interpreter {
       case 'Assign': {
         const val = this._eval(expr.value, env);
         env.set(expr.name, val);
+        return val;
+      }
+
+      case 'ArrayLiteral': return expr.elements.map(el => this._eval(el, env));
+
+      case 'Index': {
+        const arr = this._eval(expr.expr, env);
+        const idx = this._eval(expr.index, env);
+        if (!Array.isArray(arr) && typeof arr !== 'string') throw new RuntimeError('subscript index dynamic array wla string b sa7');
+        if (idx < 0 || idx >= arr.length) throw new RuntimeError('subscript out of bounds! index ' + idx + ' length ' + arr.length);
+        return arr[idx];
+      }
+
+      case 'IndexAssign': {
+        const arr = this._eval(expr.expr, env);
+        const idx = this._eval(expr.index, env);
+        const val = this._eval(expr.value, env);
+        if (!Array.isArray(arr)) throw new RuntimeError('subscript assign dynamic array b sa7');
+        if (idx < 0 || idx >= arr.length) throw new RuntimeError('subscript out of bounds! index ' + idx + ' length ' + arr.length);
+        arr[idx] = val;
         return val;
       }
 

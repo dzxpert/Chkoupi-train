@@ -10,7 +10,7 @@ const CHKOUPI_KEYWORDS = new Set([
   'dir','dima','idha','idha_mknch','ab9a_dor','dor',
   'bdl','khyr','jarb','ila_ghalt','dalla','raja3','jibli',
   'w','wla','machi','sa7','ghalt',
-  'tabi3i','3ouchri','5iyar','7arf','nass','fargh',
+  'tabi3i','3ouchri','5iyar','7arf','nass','fargh','jadwl'
 ]);
 
 function tokenize(source) {
@@ -44,6 +44,8 @@ function tokenize(source) {
     if (ch === ')')              { pos++; tokens.push({ type: 'RPAREN'           }); continue; }
     if (ch === '{')              { pos++; tokens.push({ type: 'LBRACE'           }); continue; }
     if (ch === '}')              { pos++; tokens.push({ type: 'RBRACE'           }); continue; }
+    if (ch === '[')              { pos++; tokens.push({ type: 'LBRACK'           }); continue; }
+    if (ch === ']')              { pos++; tokens.push({ type: 'RBRACK'           }); continue; }
 
     if (ch === '"') {
       pos++;
@@ -124,6 +126,16 @@ class ChkoupiParser {
     return t;
   }
 
+  parseType() {
+    let t = this.advance().value;
+    if (this.match('OP', '<')) {
+      const sub = this.parseType();
+      this.expect('OP', '>');
+      t = `${t}<${sub}>`;
+    }
+    return t;
+  }
+
   parse() {
     const stmts = [];
     while (!this.check('EOF')) stmts.push(this.parseStatement());
@@ -165,13 +177,15 @@ class ChkoupiParser {
     while (!this.check('RPAREN') && !this.check('EOF')) {
       const pname = this.expect('IDENT').value;
       this.expect('COLON');
-      const ptype = this.advance().value;
+      const ptype = this.parseType();
       params.push({ name: pname, type: ptype });
       this.match('COMMA');
     }
     this.expect('RPAREN');
-    this.expect('ARROW');
-    const retType = this.advance().value;
+    let retType = 'fargh';
+    if (this.match('ARROW')) {
+      retType = this.parseType();
+    }
     const body = this.parseBlock();
     return { type: 'FuncDecl', name, params, retType, body };
   }
@@ -180,7 +194,7 @@ class ChkoupiParser {
     const kind = this.advance().value;
     const name = this.expect('IDENT').value;
     let typeAnnot = null;
-    if (this.match('COLON')) typeAnnot = this.advance().value;
+    if (this.match('COLON')) typeAnnot = this.parseType();
     this.expect('ASSIGN');
     const init = this.parseExpr();
     this.match('SEMI');
@@ -286,7 +300,10 @@ class ChkoupiParser {
     if (this.check('ASSIGN')) {
       this.advance();
       const right = this.parseAssignment();
-      if (left.type !== 'Ident') throw new SyntaxError('Invalid assignment target');
+      if (left.type !== 'Ident' && left.type !== 'Index') throw new SyntaxError('Invalid assignment target');
+      if (left.type === 'Index') {
+        return { type: 'IndexAssign', expr: left.expr, index: left.index, value: right };
+      }
       return { type: 'Assign', name: left.name, value: right };
     }
     return left;
@@ -339,13 +356,20 @@ class ChkoupiParser {
     return this.parsePrimary();
   }
 
-  parsePrimary() {
+  _parseBasePrimary() {
     const t = this.peek();
     if (t.type === 'NUMBER') { this.advance(); return { type: 'Literal', value: t.value }; }
     if (t.type === 'STRING') { this.advance(); return { type: 'Literal', value: t.value }; }
     if (t.type === 'CHAR')   { this.advance(); return { type: 'Literal', value: t.value }; }
     if (t.type === 'KEYWORD' && t.value === 'sa7')   { this.advance(); return { type: 'Literal', value: true }; }
     if (t.type === 'KEYWORD' && t.value === 'ghalt') { this.advance(); return { type: 'Literal', value: false}; }
+    if (t.type === 'LBRACK') {
+      this.advance();
+      const elements = [];
+      while (!this.check('RBRACK') && !this.check('EOF')) { elements.push(this.parseExpr()); this.match('COMMA'); }
+      this.expect('RBRACK');
+      return { type: 'ArrayLiteral', elements };
+    }
     if (t.type === 'IDENT') {
       this.advance();
       if (this.check('LPAREN')) {
@@ -364,6 +388,21 @@ class ChkoupiParser {
       return expr;
     }
     throw new SyntaxError(`Unexpected token: ${t.type}${t.value !== undefined ? ` "${t.value}"` : ''}`);
+  }
+
+  parsePrimary() {
+    let expr = this._parseBasePrimary();
+    while (true) {
+      if (this.check('LBRACK')) {
+        this.advance();
+        const index = this.parseExpr();
+        this.expect('RBRACK');
+        expr = { type: 'Index', expr, index };
+      } else {
+        break;
+      }
+    }
+    return expr;
   }
 }
 
@@ -416,6 +455,21 @@ class ChkoupiInterpreter {
       this.out(r);
     });
     this.globals.define('a9ra', '__builtin__');
+    this.globals.define('tool', (args) => {
+      if (!args.length) return 0;
+      const v = args[0];
+      if (typeof v === 'string') return v.length;
+      if (Array.isArray(v)) return v.length;
+      return 0;
+    });
+    this.globals.define('jdr', (args) => {
+      if (!args.length) return 0.0;
+      return Math.sqrt(Number(args[0]));
+    });
+    this.globals.define('qwa', (args) => {
+      if (args.length < 2) return 0.0;
+      return Math.pow(Number(args[0]), Number(args[1]));
+    });
   }
 
   run(ast) { this.steps = 0; this._list(ast.stmts, this.globals); }
@@ -497,6 +551,23 @@ class ChkoupiInterpreter {
       case 'Literal': return expr.value;
       case 'Ident':   return env.get(expr.name);
       case 'Assign':  { const v = this._eval(expr.value, env); env.set(expr.name, v); return v; }
+      case 'ArrayLiteral': return expr.elements.map(el => this._eval(el, env));
+      case 'Index': {
+        const arr = this._eval(expr.expr, env);
+        const idx = this._eval(expr.index, env);
+        if (!Array.isArray(arr) && typeof arr !== 'string') throw new Error('subscript index dynamic array wla string b sa7');
+        if (idx < 0 || idx >= arr.length) throw new Error('subscript out of bounds! index ' + idx + ' length ' + arr.length);
+        return arr[idx];
+      }
+      case 'IndexAssign': {
+        const arr = this._eval(expr.expr, env);
+        const idx = this._eval(expr.index, env);
+        const val = this._eval(expr.value, env);
+        if (!Array.isArray(arr)) throw new Error('subscript assign dynamic array b sa7');
+        if (idx < 0 || idx >= arr.length) throw new Error('subscript out of bounds! index ' + idx + ' length ' + arr.length);
+        arr[idx] = val;
+        return val;
+      }
       case 'BinOp': {
         if (expr.op === 'w')   return this._truthy(this._eval(expr.left, env)) ? this._truthy(this._eval(expr.right, env)) : false;
         if (expr.op === 'wla') { if (this._truthy(this._eval(expr.left, env))) return true; return this._truthy(this._eval(expr.right, env)); }
@@ -562,9 +633,9 @@ const chkoupiLanguage = StreamLanguage.define({
     if (stream.match(/"[^"]*"/)) return 'string';
     if (stream.match(/'[^']*'/)) return 'string';
     if (stream.match(/\b(dir|dima|idha|idha_mknch|ab9a_dor|dor|bdl|khyr|jarb|ila_ghalt|dalla|raja3|jibli|w|wla|machi)\b/)) return 'keyword';
-    if (stream.match(/\b(tabi3i|3ouchri|5iyar|7arf|nass|fargh)\b/)) return 'typeName';
+    if (stream.match(/\b(tabi3i|3ouchri|5iyar|7arf|nass|fargh|jadwl)\b/)) return 'typeName';
     if (stream.match(/\b(sa7|ghalt)\b/)) return 'bool';
-    if (stream.match(/\b(ektb|a9ra)\b/)) return 'builtin';
+    if (stream.match(/\b(ektb|a9ra|tool)\b/)) return 'builtin';
     if (stream.match(/\b\d+(\.\d+)?\b/)) return 'number';
     if (stream.match(/->|==|!=|<=|>=|[+\-*/%<>]/)) return 'operator';
     stream.next();

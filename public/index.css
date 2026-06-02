@@ -628,10 +628,23 @@ pre.code-content code {
   }
   .editor-overlay {
     left: 0;
+    height: 70vh; /* Accommodate both panels vertically on mobile */
+  }
+  .editor-body {
+    flex-direction: column; /* Stack panels vertically on mobile */
+  }
+  .editor-pane {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    flex: 1.2; /* Slightly more space for code editor */
+  }
+  .output-pane {
+    width: 100%;
+    flex: 0.8; /* Space for execution output */
+    display: flex; /* Make output pane visible again on mobile */
   }
   .hamburger { display: block; }
   .hero h1 { font-size: 30px; }
-  .output-pane { display: none; }
 }
 @media (max-width: 600px) {
   .main { padding: 16px; }

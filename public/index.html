@@ -51,6 +51,9 @@
       <a class="nav-link" data-page="types" onclick="navigate('types'); return false;" href="#">
         <span class="nav-icon">🔷</span> Types
       </a>
+      <a class="nav-link" data-page="arrays" onclick="navigate('arrays'); return false;" href="#">
+        <span class="nav-icon">📋</span> Arrays
+      </a>
       <a class="nav-link" data-page="operators" onclick="navigate('operators'); return false;" href="#">
         <span class="nav-icon">➕</span> Operators
       </a>
@@ -112,6 +115,11 @@
             <div class="quick-card-icon">🔷</div>
             <div class="quick-card-title">Types</div>
             <div class="quick-card-desc">tabi3i, nass, 5iyar…</div>
+          </div>
+          <div class="quick-card" onclick="navigate('arrays')">
+            <div class="quick-card-icon">📋</div>
+            <div class="quick-card-title">Arrays</div>
+            <div class="quick-card-desc">jadwl&lt;T&gt; dynamic lists</div>
           </div>
           <div class="quick-card" onclick="navigate('operators')">
             <div class="quick-card-icon">➕</div>
@@ -301,6 +309,12 @@
                 <td><code>"salam"</code></td>
               </tr>
               <tr>
+                <td class="type-kw">jadwl&lt;T&gt;</td>
+                <td>Dynamic Array</td>
+                <td>heap pointer</td>
+                <td><code>[1, 2, 3]</code></td>
+              </tr>
+              <tr>
                 <td class="type-kw">fargh</td>
                 <td>Void</td>
                 <td>—</td>
@@ -342,6 +356,69 @@
             <pre
               class="code-content"><code><span class="kw-keyword">dir</span> win  : <span class="kw-type">5iyar</span> = <span class="kw-bool">sa7</span>;    <span class="kw-comment">// true  (sa7 = correct)</span>
 <span class="kw-keyword">dir</span> loss : <span class="kw-type">5iyar</span> = <span class="kw-bool">ghalt</span>;  <span class="kw-comment">// false (ghalt = wrong)</span></code></pre>
+          </div>
+        </div>
+        <div class="card">
+          <h2>String Concatenation &amp; Length</h2>
+          <p>Strings are fully-featured struct-backed types supporting concatenation with <code>+</code>, comparisons with <code>==</code>, and length checking via <code>tool()</code>:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dir</span> s1 = <span class="kw-string">"salam"</span>;
+<span class="kw-keyword">dir</span> s2 = <span class="kw-string">" algeria"</span>;
+<span class="kw-keyword">dir</span> greeting = s1 <span class="kw-op">+</span> s2;
+<span class="kw-builtin">ektb</span>(<span class="kw-string">"%s (len = %lld)\n"</span>, greeting, <span class="kw-builtin">tool</span>(greeting));
+
+<span class="kw-keyword">idha</span> (s1 <span class="kw-op">==</span> <span class="kw-string">"salam"</span>) {
+    <span class="kw-builtin">ektb</span>(<span class="kw-string">"salam equal sa7\n"</span>);
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ARRAYS -->
+      <section class="page-section" id="page-arrays">
+        <div class="page-header">
+          <h1><span class="icon">📋</span> Arrays</h1>
+          <p>Arrays in Chkoupi-lang are heap-allocated, dynamic lists represented by the <code>jadwl</code> keyword.</p>
+        </div>
+        <div class="card">
+          <h2>Dynamic Arrays — <code>jadwl</code></h2>
+          <p>Create dynamic arrays on the heap. You can declare them explicitly with a type argument e.g., <code>jadwl&lt;tabi3i&gt;</code>, or let the compiler infer the type dynamically.</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dir</span> nums : <span class="kw-type">jadwl&lt;tabi3i&gt;</span> = [<span class="kw-number">10</span>, <span class="kw-number">20</span>, <span class="kw-number">30</span>];
+<span class="kw-keyword">dir</span> names = [<span class="kw-string">"brahim"</span>, <span class="kw-string">"anaya"</span>];
+
+<span class="kw-comment">// Access by index</span>
+nums[<span class="kw-number">1</span>] = <span class="kw-number">42</span>;
+<span class="kw-builtin">ektb</span>(<span class="kw-string">"nums[1] = %lld\n"</span>, nums[<span class="kw-number">1</span>]);</code></pre>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Checking Array Length — <code>tool()</code></h2>
+          <p>The built-in function <code>tool()</code> returns the number of elements in an array or the character length of a string.</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dir</span> items = [<span class="kw-number">1</span>, <span class="kw-number">2</span>, <span class="kw-number">3</span>, <span class="kw-number">4</span>];
+<span class="kw-builtin">ektb</span>(<span class="kw-string">"length = %lld\n"</span>, <span class="kw-builtin">tool</span>(items));</code></pre>
           </div>
         </div>
       </section>
@@ -580,6 +657,24 @@ greet(<span class="kw-string">"brahim"</span>);</code></pre>
           </div>
         </div>
         <div class="card">
+          <h2>Function Return Type Inference</h2>
+          <p>You can omit the explicit return type annotation (<code>-&gt; returnType</code>). The compiler recursively analyzes return (<code>raja3</code>) statements and infers the correct type automatically:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">dalla</span> addTen(x: <span class="kw-type">tabi3i</span>) {
+    <span class="kw-keyword">raja3</span> x <span class="kw-op">+</span> <span class="kw-number">10</span>;  <span class="kw-comment">// Inferred return: tabi3i</span>
+}
+
+<span class="kw-builtin">ektb</span>(<span class="kw-string">"result = %lld\n"</span>, addTen(<span class="kw-number">5</span>));</code></pre>
+          </div>
+        </div>
+        <div class="card">
           <h2>Recursive Functions</h2>
           <div class="code-block">
             <div class="code-block-header">
@@ -741,6 +836,24 @@ greet(<span class="kw-string">"brahim"</span>);</code></pre>
             <span class="info-icon">🚧</span>
             <p><strong>Future feature:</strong> Module imports are planned and the syntax is finalized, but full linker
               integration is still under development.</p>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Standard Math Library — <code>jibli "math"</code></h2>
+          <p>Import the standard math library to use <code>jdr</code> (square root) and <code>qwa</code> (exponentiation):</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang-badge">chkoupi (.dz)</span>
+              <div class="code-actions">
+                <button class="btn-copy" onclick="copyCode(this)">📋 Copy</button>
+                <button class="btn-try" onclick="tryCode(this)">▶ Try it</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="kw-keyword">jibli</span> <span class="kw-string">"math"</span>;
+
+<span class="kw-keyword">dir</span> sq = jdr(<span class="kw-number">16.0</span>);      <span class="kw-comment">// 4.0</span>
+<span class="kw-keyword">dir</span> pw = qwa(<span class="kw-number">2.0</span>, <span class="kw-number">3.0</span>);  <span class="kw-comment">// 8.0</span>
+<span class="kw-builtin">ektb</span>(<span class="kw-string">"sq = %lf, pw = %lf\n"</span>, sq, pw);</code></pre>
           </div>
         </div>
       </section>

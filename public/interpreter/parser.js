@@ -44,6 +44,16 @@ export class Parser {
     return t;
   }
 
+  parseType() {
+    let t = this.advance().value;
+    if (this.match('OP', '<')) {
+      const sub = this.parseType();
+      this.expect('OP', '>');
+      t = `${t}<${sub}>`;
+    }
+    return t;
+  }
+
   // ── Top-level ──────────────────────────────────────────────────────────────
 
   parse() {
@@ -93,13 +103,15 @@ export class Parser {
     while (!this.check('RPAREN') && !this.check('EOF')) {
       const paramName = this.expect('IDENT').value;
       this.expect('COLON');
-      const paramType = this.advance().value; // type keyword
+      const paramType = this.parseType();
       params.push({ name: paramName, type: paramType });
       this.match('COMMA');
     }
     this.expect('RPAREN');
-    this.expect('ARROW');
-    const retType = this.advance().value; // return type keyword
+    let retType = 'fargh';
+    if (this.match('ARROW')) {
+      retType = this.parseType();
+    }
     const body = this.parseBlock();
     return { type: 'FuncDecl', name, params, retType, body };
   }
@@ -109,7 +121,7 @@ export class Parser {
     const name = this.expect('IDENT').value;
     let typeAnnot = null;
     if (this.match('COLON')) {
-      typeAnnot = this.advance().value; // type keyword
+      typeAnnot = this.parseType();
     }
     this.expect('ASSIGN');
     const init = this.parseExpr();
@@ -151,7 +163,7 @@ export class Parser {
       const kind = this.advance().value;
       const name = this.expect('IDENT').value;
       let typeAnnot = null;
-      if (this.match('COLON')) typeAnnot = this.advance().value;
+      if (this.match('COLON')) typeAnnot = this.parseType();
       this.expect('ASSIGN');
       const initVal = this.parseExpr();
       init = { type: 'VarDecl', kind, name, typeAnnot, init: initVal };
@@ -226,7 +238,10 @@ export class Parser {
     if (this.check('ASSIGN')) {
       this.advance();
       const right = this.parseAssignment();
-      if (left.type !== 'Ident') throw new Error('Invalid assignment target');
+      if (left.type !== 'Ident' && left.type !== 'Index') throw new Error('Invalid assignment target');
+      if (left.type === 'Index') {
+        return { type: 'IndexAssign', expr: left.expr, index: left.index, value: right };
+      }
       return { type: 'Assign', name: left.name, value: right };
     }
     return left;
@@ -296,7 +311,7 @@ export class Parser {
     return this.parsePrimary();
   }
 
-  parsePrimary() {
+  _parseBasePrimary() {
     const t = this.peek();
 
     if (t.type === 'NUMBER') { this.advance(); return { type: 'Literal', value: t.value }; }
@@ -305,6 +320,17 @@ export class Parser {
 
     if (t.type === 'KEYWORD' && t.value === 'sa7')   { this.advance(); return { type: 'Literal', value: true }; }
     if (t.type === 'KEYWORD' && t.value === 'ghalt') { this.advance(); return { type: 'Literal', value: false }; }
+
+    if (t.type === 'LBRACK') {
+      this.advance();
+      const elements = [];
+      while (!this.check('RBRACK') && !this.check('EOF')) {
+        elements.push(this.parseExpr());
+        this.match('COMMA');
+      }
+      this.expect('RBRACK');
+      return { type: 'ArrayLiteral', elements };
+    }
 
     if (t.type === 'IDENT') {
       this.advance();
@@ -331,5 +357,20 @@ export class Parser {
     throw new Error(
       `Syntax error: unexpected token ${t.type}${t.value !== undefined ? ` "${t.value}"` : ''}`
     );
+  }
+
+  parsePrimary() {
+    let expr = this._parseBasePrimary();
+    while (true) {
+      if (this.check('LBRACK')) {
+        this.advance();
+        const index = this.parseExpr();
+        this.expect('RBRACK');
+        expr = { type: 'Index', expr, index };
+      } else {
+        break;
+      }
+    }
+    return expr;
   }
 }

@@ -15,7 +15,7 @@ const KEYWORDS = new Set([
   'w', 'wla', 'machi',
   'sa7', 'ghalt',
   // Types
-  'tabi3i', '3ouchri', '5iyar', '7arf', 'nass', 'fargh',
+  'tabi3i', '3ouchri', '5iyar', '7arf', 'nass', 'fargh', 'jadwl',
 ]);
 
 export function tokenize(source) {
@@ -63,6 +63,8 @@ export function tokenize(source) {
     if (ch === ')')               { pos++; tokens.push({ type: 'RPAREN'           }); continue; }
     if (ch === '{')               { pos++; tokens.push({ type: 'LBRACE'           }); continue; }
     if (ch === '}')               { pos++; tokens.push({ type: 'RBRACE'           }); continue; }
+    if (ch === '[')               { pos++; tokens.push({ type: 'LBRACK'           }); continue; }
+    if (ch === ']')               { pos++; tokens.push({ type: 'RBRACK'           }); continue; }
 
     // String literal
     if (ch === '"') {
